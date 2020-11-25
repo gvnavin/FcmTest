@@ -1,6 +1,8 @@
 package com.example.fcmtest
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -15,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    private val TAG: String = "MainActivity";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +36,27 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+
+        Log.d(TAG, "intent: $intent")
+        Log.d(TAG, "intent.extras: " + intent.extras)
+
+        //When Notification is tapped
+        if (intent.extras != null) {
+            //init message
+            val message = intent.extras!!["message"].toString()
+            val title = intent.extras!!["title"].toString()
+
+            val keySet = intent.extras!!.keySet()
+            for (key in keySet) {
+                val value = intent.extras!![key].toString()
+                Log.d(TAG, "key: " + key + ", value: " + value)
+            }
+
+            //save the message
+            Log.d(TAG, "message: " + message)
+            Log.d(TAG, "title: " + title)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
